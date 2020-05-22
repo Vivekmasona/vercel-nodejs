@@ -3,6 +3,16 @@ An Example Node.js Serverless Function / Deployment https://vercel.com/
 
 -----------------------------
 
+
+[vercel-nodejs.now.sh/](https://vercel-nodejs.now.sh/)
+
+
+[vercel-nodejs.now.sh/streams](https://vercel-nodejs.now.sh/streams)
+
+
+[vercel-nodejs.now.sh/stream](https://vercel-nodejs.now.sh/stream)
+
+
 2 API endpoints to get STREAM and to send a STREAM through. 
 
 The endpoint which posts a STREAM to the server returns this STREAM in its response.
