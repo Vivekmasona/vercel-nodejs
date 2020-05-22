@@ -32,4 +32,10 @@ You can check out the /STREAMS route in the browser and make an API call to /STR
 
 [docs](https://vercel.com/docs/configuration#introduction/configuration-reference)
 
+###### Directory Listing
+
+[docs](https://vercel.com/docs/directory-listing)
+
+##### P.S.
+
 [Easily Deploy a Serverless Node App with ZEIT Now](https://scotch.io/tutorials/easily-deploy-a-serverless-node-app-with-zeit-now)
