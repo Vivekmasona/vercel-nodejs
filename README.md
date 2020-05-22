@@ -1,6 +1,13 @@
 # vercel-nodejs
 An Example Node.js Serverless Function / Deployment https://vercel.com/
 
+-----------------------------
+
+2 API endpoints to get STREAM and to send a STREAM through. 
+
+The endpoint which posts a STREAM to the server returns this STREAM in its response.
+
+You can check out the /STREAMS route in the browser and make an API call to /STREAM with data.
 
 -----------------------------
 
