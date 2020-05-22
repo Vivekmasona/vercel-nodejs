@@ -21,3 +21,6 @@ An Example Node.js Serverless Function / Deployment https://vercel.com/
 
 [docs](https://vercel.com/docs/runtimes#official-runtimes/node-js)
 
+###### Configuration Reference
+
+[docs](https://vercel.com/docs/configuration#introduction/configuration-reference)
