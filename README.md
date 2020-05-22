@@ -24,3 +24,5 @@ An Example Node.js Serverless Function / Deployment https://vercel.com/
 ###### Configuration Reference
 
 [docs](https://vercel.com/docs/configuration#introduction/configuration-reference)
+
+[Easily Deploy a Serverless Node App with ZEIT Now](https://scotch.io/tutorials/easily-deploy-a-serverless-node-app-with-zeit-now)
