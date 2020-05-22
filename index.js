@@ -1,28 +1,46 @@
 const express = require("express");
 const app = express();
 
-const port = 3001;
+app.use(express.urlencoded({extended: false}));
+const exampleFragment = `Example of Read and parse 
+                         POST/PATCH/PUT request JSON 
+                         or form body with Express 
+                         and no dependencies`;
+const seeCodeFragment = `<strong>Deploying on vercel.com</strong>`
+const testText = `<html>
+                        <body>
+                          ${exampleFragment}
+                          <h2>Submit the following form</h2>
+                          <div>
+                            <form action="/form" method="post">
+                              <label for="something">Enter something:</label>
+                              <input type="text" id="something" name="something" />
+                              <button type="submit" value="">Send it</button>
+                            </form>
+                          </div>
+                          ${seeCodeFragment}
+                        </body>
+                    </html>
+`;
 
-app.use(express.urlencoded({ extended: false }));
+app.get("/", (req, res) => res.send(testText));
 
-app.get("/", (req, res) => {
-  res.send("Hello from index.js ... res.send()");
+app.post("/form", (req, res) => {
+    res.send(`<html>
+                      <body>
+                        ${exampleFragment}
+                        <p>
+                          Full body is: <pre><code>${JSON.stringify(req.body)}</code></pre>
+                        </p>
+                        <p><a href="/">Go back</a></p>
+                        ${seeCodeFragment}
+                      </body>
+                    </html>
+                `
+    );
 });
 
-app.get("/streams", (req, res) => {
-  res.json([
-    { id: "1", title: "Tom Kot", description: "Description of deployment on vercel.com", userId: "123456789" },
-    { id: "2", title: "Joe Black", description: "Description of building App", userId: "987654321" }
-  ]);
-});
-
-app.post("/stream", (req, res) => {
-  const { id, title, description, userId } = req.body;
-
-  res.send({ status: "STREAM IS CREATED with values (id, title, description, userId, port): ", id, title, description, userId, port });
-});
-
-app.listen(port, () => {
-  console.log(`SERVER IS RUNNING ON PORT ${port}
-VISIT http://localhost:3001`);
+const PORT = process.env.PORT || 3002;
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
 });
