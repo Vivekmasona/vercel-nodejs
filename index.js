@@ -1,46 +1,56 @@
-const express = require("express");
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
 const app = express();
+app.use(bodyParser.json());
+app.use(cors());
 
-app.use(express.urlencoded({extended: false}));
-const exampleFragment = `Example of Read and parse 
-                         POST/PATCH/PUT request JSON 
-                         or form body with Express 
-                         and no dependencies`;
-const seeCodeFragment = `<strong>Deploying on vercel.com</strong>`
-const testText = `<html>
-                        <body>
-                          ${exampleFragment}
-                          <h2>Submit the following form</h2>
-                          <div>
-                            <form action="/form" method="post">
-                              <label for="something">Enter something:</label>
-                              <input type="text" id="something" name="something" />
-                              <button type="submit" value="">Send it</button>
-                            </form>
-                          </div>
-                          ${seeCodeFragment}
-                        </body>
-                    </html>
-`;
+let sessions = {};
 
-app.get("/", (req, res) => res.send(testText));
+app.post('/control', (req, res) => {
+    const { action, value, sessionId } = req.body;
 
-app.post("/form", (req, res) => {
-    res.send(`<html>
-                      <body>
-                        ${exampleFragment}
-                        <p>
-                          Full body is: <pre><code>${JSON.stringify(req.body)}</code></pre>
-                        </p>
-                        <p><a href="/">Go back</a></p>
-                        ${seeCodeFragment}
-                      </body>
-                    </html>
-                `
-    );
+    if (!sessions[sessionId]) {
+        sessions[sessionId] = { url: '', status: 'stop', volume: 100, action: null, value: null };
+    }
+
+    sessions[sessionId].action = action;
+    sessions[sessionId].value = value;
+
+    res.json({ status: 'Command received', action, value, sessionId });
 });
 
-const PORT = process.env.PORT || 3002;
+app.post('/update-url', (req, res) => {
+    const { url, sessionId } = req.body;
+
+    if (!sessions[sessionId]) {
+        sessions[sessionId] = { url: '', status: 'stop', volume: 100, action: null, value: null };
+    }
+
+    sessions[sessionId].url = url;
+    res.json({ status: 'URL updated', sessionId });
+});
+
+app.get('/current-url/:sessionId', (req, res) => {
+    const { sessionId } = req.params;
+
+    if (!sessions[sessionId]) {
+        return res.status(400).json({ error: 'Invalid session ID' });
+    }
+
+    res.json({
+        success: true,
+        sessionId,
+        url: sessions[sessionId].url,
+        status: sessions[sessionId].status,
+        volume: sessions[sessionId].volume,
+        action: sessions[sessionId].action,
+        value: sessions[sessionId].value
+    });
+});
+
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
